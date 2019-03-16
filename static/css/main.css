@@ -6,3 +6,11 @@
 #main-hero {
   min-height: 50vh;
 }
+
+a {
+  transition: 0.5s all ease;
+}
+
+a:hover {
+  opacity: 0.6;
+}

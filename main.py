@@ -3,7 +3,7 @@ import shutil
 import inspect
 from server import Server
 
-debug_mode = True
+debug_mode = False
 CONFIGURATION_PATHS = [os.path.join(os.sep, 'etc', 'nginx', 'conf.d', 'virtual.conf')]
 CONFIG_STORAGE_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Nginx-Confs')
 

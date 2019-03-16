@@ -8,9 +8,9 @@
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <base href="/">
-    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="static/css/main.css?{{time}}"> <!-- avoid caching by using unique URL each time -->
 </head>
-<body>
+<body id="body" style="overflow-y: hidden; overflow-x: auto;">
 <section class="hero is-fullheight is-transparent section is-bold" id="main-hero">
     <div class="hero-body" style="padding-top: 0; padding-bottom: 0;">
         <div class="container has-text-centered">
@@ -19,26 +19,30 @@
         </div>
     </div>
 </section>
-<section class="hero is-primary" style="background-color: #50a516;">
+<section class="hero is-primary" style="background-color: #50a516;" id="link-container">
   <div class="hero-body">
     <div class="container">
-      <h1 class="title is-size-2" style="text-align: center;">
+      <h1 class="title is-size-2 has-text-centered">
         Applications Running On This Server:
       </h1>
       <hr>
       {% if urls is defined %}
         {% for url in urls %}
-          <div class="container">
-            <a href="{{ url }}" class="is-size-3">{{ short_urls[loop.index - 1] }} - Title</a>
+          <div class="container link-container">
+            <a href="{{ url }}" class="is-size-3">{{ short_urls[loop.index - 1] }}{{' - ' + titles[loop.index - 1] if titles[loop.index -1]|length > 0 else ''}}</a>
           </div>
         {% endfor %}
       {% else %}
-      <div class="container">
+      <div class="container  link-container">
         <a>None</a>
       </div>
       {% endif %}
     </div>
   </div>
+  <div class="hero-foot" id="footer">
+    <h1 class="has-text-centered">&copy; {{ now.year }} <a href="https://www.energizeandover.com/" target="_blank">Energize Andover</a><span style="padding: 20px;"></span>Made by <a href="https://ivanovich.us" target="_blank">Daniel Ivanovich</a></h1>
+  </div>
+  <script type="text/javascript" src="static/js/index.js?{{time}}"></script>
 </section>
 </body>
 </html>

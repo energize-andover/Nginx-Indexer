@@ -1,4 +1,7 @@
 import requests
+import eventlet
+import calendar
+from datetime import datetime
 from lxml.html import fromstring
 from flask import *
 from main import main, configured_servers
@@ -15,17 +18,40 @@ for server in configured_servers:
     configured_urls += server.get_link_urls()
     short_urls += server.get_short_urls()
 
-for url in configured_urls:
-    # Pull the title of the webpage from the URL
-    r = requests.get(url)
-    tree = fromstring(r.content)
-    print(tree.findtext('.//title'))
+eventlet.monkey_patch() # Necessary to set timeouts on requests
 
-print(configured_urls)
+for index in range(0, len(configured_urls)):
+    # Pull the title of the webpage from the URL, otherwise just provide the short url
+    url = configured_urls[index]
+
+    global title
+    try:
+        with eventlet.Timeout(2):
+            r = requests.get(url) # 2 second ping timeout in case of invalid url
+            tree = fromstring(r.content)
+            title = tree.findtext('.//title')
+            if r.status_code != 200:
+                title = ''
+    except:
+        title = ''
+
+    titles.append(title)
+
+@app.context_processor
+def inject_now():
+    return {'now': datetime.utcnow()}
+
+@app.context_processor
+def inject_time_to_all_templates():
+    return dict(time=get_time())
+
 
 @app.route('/')
 def index():
-    return render_template("index.html", urls=configured_urls, short_urls=short_urls)
+    return render_template("index.html", urls=configured_urls, short_urls=short_urls, titles=titles)
+
+def get_time():
+    return calendar.timegm(datetime.now().utctimetuple())
 
 if __name__ == '__main__':
     app.run()
