@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EnergizeAndover Index</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <base href="/">
+    <link rel="stylesheet" href="static/css/main.css">
+</head>
+<body>
+<section class="hero is-fullheight is-transparent section is-bold" id="main-hero">
+    <div class="hero-body" style="padding-top: 0; padding-bottom: 0;">
+        <div class="container has-text-centered">
+            <img src="/static/img/logo.png" alt="Energize Andover" id="title-logo">
+            <h2 class="subtitle is-size-3 is-bold">Identifying and eliminating energy waste</h2>
+        </div>
+    </div>
+</section>
+<section class="hero is-primary" style="background-color: #50a516;">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title is-size-2" style="text-align: center;">
+        Applications Running On This Server:
+      </h1>
+      <hr>
+      {% if urls is defined %}
+        {% for url in urls %}
+          <div class="container">
+            <a href="{{ url }}" class="is-size-3">{{ short_urls[loop.index - 1] }} - Title</a>
+          </div>
+        {% endfor %}
+      {% else %}
+      <div class="container">
+        <a>None</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+</body>
+</html>
