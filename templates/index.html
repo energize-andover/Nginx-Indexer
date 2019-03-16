@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>EnergizeAndover Index</title>
+    <title>Energize Andover Index</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -29,7 +29,15 @@
       {% if urls is defined %}
         {% for url in urls %}
           <div class="container link-container">
-            <a href="{{ url }}" class="is-size-3">{{ short_urls[loop.index - 1] }}{{' - ' + titles[loop.index - 1] if titles[loop.index -1]|length > 0 else ''}}</a>
+            <a href="{{ url }}" class="is-size-3" id="link-{{loop.index - 1}}">{{ short_urls[loop.index - 1] }}
+              {% if titles[loop.index -1]|length > 0 %}
+               - {{titles[loop.index - 1]}}
+              {% else %}
+                {% if short_urls[loop.index - 1] == '/' %}
+                 - <span class="title-filler"></span>
+                {% endif %}
+              {% endif %}
+            </a>
           </div>
         {% endfor %}
       {% else %}

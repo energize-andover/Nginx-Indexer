@@ -10,6 +10,10 @@ function adjustHeights() {
 
 adjustHeights();
 
+$('.title-filler').each((indx, filler) => {
+  $(filler).html(document.getElementsByTagName("title")[0].innerHTML);
+});
+
 $(window).bind('resize', function () {
   adjustHeights();
 });

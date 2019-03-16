@@ -18,12 +18,11 @@ for server in configured_servers:
     configured_urls += server.get_link_urls()
     short_urls += server.get_short_urls()
 
-eventlet.monkey_patch() # Necessary to set timeouts on requests
+configured_urls = sorted(configured_urls)
+short_urls = sorted(short_urls)
 
-for index in range(0, len(configured_urls)):
-    # Pull the title of the webpage from the URL, otherwise just provide the short url
-    url = configured_urls[index]
-
+# Pull the title of the webpage from the URL
+def get_title(url):
     global title
     try:
         with eventlet.Timeout(2):
@@ -35,7 +34,13 @@ for index in range(0, len(configured_urls)):
     except:
         title = ''
 
-    titles.append(title)
+    return title
+
+eventlet.monkey_patch() # Necessary to set timeouts on requests
+
+for index in range(0, len(configured_urls)):
+    titles.append(get_title(configured_urls[index]))
+
 
 @app.context_processor
 def inject_now():
@@ -49,6 +54,7 @@ def inject_time_to_all_templates():
 @app.route('/')
 def index():
     return render_template("index.html", urls=configured_urls, short_urls=short_urls, titles=titles)
+
 
 def get_time():
     return calendar.timegm(datetime.now().utctimetuple())
