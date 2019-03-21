@@ -1,10 +1,13 @@
 import requests
 import eventlet
+import time
 import calendar
 from datetime import datetime
 from lxml.html import fromstring
 from flask import *
 from main import main, configured_servers
+
+time.sleep(60) # Wait a minute before begining the indexing process so all configured sites have time to go live
 
 main() # initalize configured_servers
 
