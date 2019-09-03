@@ -1,14 +1,13 @@
 import os
 import shutil
-import inspect
+from config import *
 from server import Server
 
 debug_mode = False
-CONFIGURATION_PATHS = [os.path.join(os.sep, 'etc', 'nginx', 'conf.d', 'virtual.conf')]
-CONFIG_STORAGE_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Nginx-Confs')
 
 global configured_servers
 configured_servers = []
+
 
 def main():
     if os.path.isdir(CONFIG_STORAGE_PATH) and not debug_mode:
