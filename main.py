@@ -1,7 +1,7 @@
 import os
 import shutil
 from config import *
-from server import Server
+from server_class import Server
 
 debug_mode = False
 

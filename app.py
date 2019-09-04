@@ -10,20 +10,19 @@ from main import main, configured_servers
 
 time.sleep(STARTUP_DELAY)  # Wait for the startup delay so the other applications have time to boot up
 
-main()  # initalize configured_servers
+main()  # initialize configured_servers
 
 app = Flask(__name__)
 
 configured_urls = []
 short_urls = []
+short_url_use = []
 titles = []
 
 for server in configured_servers:
     configured_urls += server.get_link_urls()
     short_urls += server.get_short_urls()
-
-configured_urls = sorted(configured_urls)
-short_urls = sorted(short_urls)
+    short_url_use += server.get_short_url_use()
 
 
 # Pull the title of the webpage from the URL
@@ -60,7 +59,8 @@ def inject_time_to_all_templates():
 
 @app.route('/')
 def index():
-    return render_template("index.html", urls=configured_urls, short_urls=short_urls, titles=titles)
+    return render_template("index.html", urls=configured_urls, short_urls=short_urls, short_url_use=short_url_use,
+                           titles=titles)
 
 
 def get_time():

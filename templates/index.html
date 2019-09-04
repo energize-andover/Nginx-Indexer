@@ -41,7 +41,7 @@
       {% if urls is defined %}
         {% for url in urls %}
           <div class="container link-container">
-            <a href="{{ url }}" class="is-size-3" id="link-{{loop.index - 1}}">{{ short_urls[loop.index - 1] }}
+            <a href="{{ url if not short_url_use[loop.index0] else short_urls[loop.index0] }}" class="is-size-3" id="link-{{loop.index - 1}}">{{ short_urls[loop.index - 1] }}
               {% if titles[loop.index -1]|length > 0 %}
                - {{titles[loop.index - 1]}}
               {% else %}
