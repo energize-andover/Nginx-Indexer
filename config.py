@@ -16,7 +16,10 @@ CONFIGURATION_PATHS = [os.path.join(os.sep, 'etc', 'nginx', 'conf.d', 'virtual.c
 # The path to the folder in which the configuration files will be copied to and temporarily stored for indexing
 CONFIG_STORAGE_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Nginx-Confs')
 
-STARTUP_DELAY = 30  # How many seconds to wait to start indexing after app.py is run, in seconds. Allows apps to boot up
+STARTUP_DELAY = 45  # How many seconds to wait to start indexing after app.py is run, in seconds. Allows apps to boot up
+
+# The address and port at which this indexer's website will be hosted (e.g. http://localhost:7779) or None
+ADDRESS_HOSTED = 'http://localhost:7779'
 
 '''
     # BE SURE TO RUN git update-index --skip-worktree config.py AFTER MAKING CHANGES TO THIS FILE FOR THE FIRST TIME!
